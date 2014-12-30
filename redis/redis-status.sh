@@ -25,7 +25,7 @@ fi
 TIMENOW=`date '+%s'`
 
 if [ "$(($TIMENOW - $TIMECACHE))" -gt "$CACHETTL" ]; then
-    (echo -en "INFO\r\n"; sleep 1;) | nc $SERV $PORT > $CACHE || exit 1
+    (echo -en "INFO\r\n"; sleep 1;) | nc -w1 $SERV $PORT > $CACHE || exit 1
 fi
 
 FIRST_ELEMENT=1

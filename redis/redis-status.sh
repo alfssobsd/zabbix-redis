@@ -13,7 +13,7 @@ if [[ -z "$1" ]]; then
     exit 1
 fi
 
-CACHETTL="55" # Время действия кеша в секундах (чуть меньше чем период опроса элементов)
+CACHETTL="55" # Duration cache in seconds (a little less than the period of the survey items)
 CACHE="/tmp/redis-status-`echo $SERV | md5sum | cut -d" " -f1`.cache"
 
 if [ -s "$CACHE" ]; then

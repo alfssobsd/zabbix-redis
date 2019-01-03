@@ -114,6 +114,12 @@ case $METRIC in
     'rdb_bgsave_in_progress')
         cat $CACHE | grep "rdb_bgsave_in_progress:" | cut -d':' -f2
         ;;
+    'rdb_last_bgsave_status')
+        cat $CACHE | grep "rdb_last_bgsave_status:" | cut -d':' -f2
+        ;;
+    'rdb_last_save_time')
+        cat $CACHE | grep "rdb_last_save_time:" | cut -d':' -f2
+        ;;
     'aof_rewrite_in_progress')
         cat $CACHE | grep "aof_rewrite_in_progress:" | cut -d':' -f2
         ;;
@@ -184,6 +190,17 @@ case $METRIC in
         LIST_DATABSE=`cat $CACHE | grep '^db.:'|cut -d: -f1`
         databse_detect
         ;;                                                     
+    'master_last_io_seconds_ago')
+        cat $CACHE | grep "master_last_io_seconds_ago:" | cut -d':' -f2
+        ;;
+    'cluster_state')
+        cluster_enabled=$(cat $CACHE | grep "cluster_enabled:" | cut -d':' -f2 | tr -d '\r')
+        if [ "$cluster_enabled" = 0 ]; then
+                echo "disabled"
+        else
+                cat $CACHE | grep "cluster_state:" | cut -d':' -f2
+        fi
+        ;;
     *)   
         echo "Not selected metric"
         exit 0
